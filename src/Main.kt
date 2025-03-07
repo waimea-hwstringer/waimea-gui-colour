@@ -32,7 +32,20 @@ class MainWindow : JFrame(), ActionListener {
 
     // Fields to hold the UI elements
     private lateinit var greetingLabel: JLabel
-    private lateinit var helloButton: JButton
+
+
+    private lateinit var rAddButton: JButton
+    private lateinit var rMinusButton: JButton
+    private lateinit var rText: JTextField
+
+    private lateinit var gAddButton: JButton
+    private lateinit var gMinusButton: JButton
+    private lateinit var gText: JTextField
+
+    private lateinit var bAddButton: JButton
+    private lateinit var bMinusButton: JButton
+    private lateinit var bText: JTextField
+
 
     /**
      * Configure the UI and display it
@@ -50,7 +63,7 @@ class MainWindow : JFrame(), ActionListener {
      */
     private fun configureWindow() {
         title = "Kotlin Swing GUI Demo"
-        contentPane.preferredSize = Dimension(600, 350)
+        contentPane.preferredSize = Dimension(300, 350)
         defaultCloseOperation = WindowConstants.EXIT_ON_CLOSE
         isResizable = false
         layout = null
@@ -62,19 +75,77 @@ class MainWindow : JFrame(), ActionListener {
      * Populate the UI with UI controls
      */
     private fun addControls() {
-        val defaultFont = Font(Font.SANS_SERIF, Font.PLAIN, 30)
+        val defaultFont = Font(Font.SANS_SERIF, Font.PLAIN, 13)
 
-        greetingLabel = JLabel("Hello, World!")
+        greetingLabel = JLabel("colour")
         greetingLabel.horizontalAlignment = SwingConstants.CENTER
-        greetingLabel.bounds = Rectangle(50, 50, 500, 100)
+        greetingLabel.bounds = Rectangle(20, 20, 240, 100)
         greetingLabel.font = defaultFont
         add(greetingLabel)
 
-        helloButton = JButton("Click Me!")
-        helloButton.bounds = Rectangle(50,200,500,100)
-        helloButton.font = defaultFont
-        helloButton.addActionListener(this)     // Handle any clicks
-        add(helloButton)
+        //---R----------------------------------------------------------------------
+        rAddButton = JButton("+")
+        rAddButton.bounds = Rectangle(20,220,40,20)
+        rAddButton.font = defaultFont
+        rAddButton.addActionListener(this)     // Handle any clicks
+        add(rAddButton)
+
+        rMinusButton = JButton("-")
+        rMinusButton.bounds = Rectangle(60,220,40,20)
+        rMinusButton.font = defaultFont
+        rMinusButton.addActionListener(this)     // Handle any clicks
+        add(rMinusButton)
+
+        rText = JTextField("000")
+        rText.horizontalAlignment = SwingConstants.CENTER
+        rText.addActionListener(this)
+        rText.bounds = Rectangle(20, 250, 80, 80)
+        rText.font = defaultFont
+        rText.foreground = Color.red
+        add(rText)
+
+        //---G----------------------------------------------------------------------
+        gAddButton = JButton("+")
+        gAddButton.bounds = Rectangle(110,220,40,20)
+        gAddButton.font = defaultFont
+        gAddButton.addActionListener(this)     // Handle any clicks
+        add(gAddButton)
+
+        gMinusButton = JButton("-")
+        gMinusButton.bounds = Rectangle(150,220,40,20)
+        gMinusButton.font = defaultFont
+        gMinusButton.addActionListener(this)     // Handle any clicks
+        add(gMinusButton)
+
+        gText = JTextField("000")
+        gText.horizontalAlignment = SwingConstants.CENTER
+        gText.addActionListener(this)
+        gText.bounds = Rectangle(110, 250, 80, 80)
+        gText.font = defaultFont
+        gText.foreground = Color.green
+        add(gText)
+
+        //---B----------------------------------------------------------------------
+        bAddButton = JButton("+")
+        bAddButton.bounds = Rectangle(200,220,40,20)
+        bAddButton.font = defaultFont
+        bAddButton.addActionListener(this)     // Handle any clicks
+        add(bAddButton)
+
+        bMinusButton = JButton("-")
+        bMinusButton.bounds = Rectangle(240,220,40,20)
+        bMinusButton.font = defaultFont
+        bMinusButton.addActionListener(this)     // Handle any clicks
+        add(bMinusButton)
+
+        bText = JTextField("000")
+        bText.horizontalAlignment = SwingConstants.CENTER
+        bText.addActionListener(this)
+        bText.bounds = Rectangle(200, 250, 80, 80)
+        bText.font = defaultFont
+        bText.foreground = Color.blue
+        add(bText)
+
     }
 
 
@@ -83,8 +154,8 @@ class MainWindow : JFrame(), ActionListener {
      */
     override fun actionPerformed(e: ActionEvent?) {
         when (e?.source) {
-            helloButton -> {
-                greetingLabel.text = "You clicked the button!"
+            rAddButton -> {
+                greetingLabel.text = "red+++"
             }
         }
     }
