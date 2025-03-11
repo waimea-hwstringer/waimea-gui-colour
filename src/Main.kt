@@ -31,16 +31,19 @@ fun main() {
 class MainWindow : JFrame(), ActionListener {
 
     // Fields to hold the UI elements
-    private lateinit var greetingLabel: JLabel
+    private lateinit var colourPad: JLabel
 
+    private lateinit var rSlider: JSlider
     private lateinit var rAddButton: JButton
     private lateinit var rMinusButton: JButton
     private lateinit var rText: JTextField
 
+    private lateinit var gSlider: JSlider
     private lateinit var gAddButton: JButton
     private lateinit var gMinusButton: JButton
     private lateinit var gText: JTextField
 
+    private lateinit var bSlider: JSlider
     private lateinit var bAddButton: JButton
     private lateinit var bMinusButton: JButton
     private lateinit var bText: JTextField
@@ -76,13 +79,13 @@ class MainWindow : JFrame(), ActionListener {
     private fun addControls() {
         val defaultFont = Font(Font.SANS_SERIF, Font.PLAIN, 13)
 
-        greetingLabel = JLabel("colour")
-        greetingLabel.horizontalAlignment = SwingConstants.CENTER
-        greetingLabel.bounds = Rectangle(20, 20, 260, 180)
-        greetingLabel.font = defaultFont
-        greetingLabel.isOpaque = true
-        greetingLabel.background = Color.red
-        add(greetingLabel)
+        colourPad = JLabel("#000000")
+        colourPad.horizontalAlignment = SwingConstants.CENTER
+        colourPad.bounds = Rectangle(20, 20, 260, 170)
+        colourPad.font = defaultFont
+        colourPad.isOpaque = true
+        colourPad.background = Color(0,0,0)
+        add(colourPad)
 
         //---R----------------------------------------------------------------------
         rAddButton = JButton("+")
@@ -91,13 +94,21 @@ class MainWindow : JFrame(), ActionListener {
         rAddButton.addActionListener(this)     // Handle any clicks
         add(rAddButton)
 
+        rSlider = JSlider(0, 255, 0)
+        rSlider.bounds = Rectangle(10, 195, 100, 20)
+        rSlider.addChangeListener {
+            rText.text = rSlider.value.toString().format("%03d", rSlider.value)
+            updateUI()
+        }
+        add(rSlider)
+
         rMinusButton = JButton("-")
         rMinusButton.bounds = Rectangle(60,220,40,20)
         rMinusButton.font = defaultFont
         rMinusButton.addActionListener(this)     // Handle any clicks
         add(rMinusButton)
 
-        rText = JTextField("0")
+        rText = JTextField("000")
         rText.horizontalAlignment = SwingConstants.CENTER
         rText.addActionListener(this)
         rText.bounds = Rectangle(20, 250, 80, 80)
@@ -112,13 +123,21 @@ class MainWindow : JFrame(), ActionListener {
         gAddButton.addActionListener(this)     // Handle any clicks
         add(gAddButton)
 
+        gSlider = JSlider(0, 255, 0)
+        gSlider.bounds = Rectangle(100, 195, 100, 20)
+        gSlider.addChangeListener {
+            gText.text = gSlider.value.toString()
+            updateUI()
+        }
+        add(gSlider)
+
         gMinusButton = JButton("-")
         gMinusButton.bounds = Rectangle(150,220,40,20)
         gMinusButton.font = defaultFont
         gMinusButton.addActionListener(this)     // Handle any clicks
         add(gMinusButton)
 
-        gText = JTextField("0")
+        gText = JTextField("000")
         gText.horizontalAlignment = SwingConstants.CENTER
         gText.addActionListener(this)
         gText.bounds = Rectangle(110, 250, 80, 80)
@@ -133,13 +152,21 @@ class MainWindow : JFrame(), ActionListener {
         bAddButton.addActionListener(this)     // Handle any clicks
         add(bAddButton)
 
+        bSlider = JSlider(0, 255, 0)
+        bSlider.bounds = Rectangle(190, 195, 100, 20)
+        bSlider.addChangeListener {
+            bText.text = bSlider.value.toString()
+            updateUI()
+        }
+        add(bSlider)
+
         bMinusButton = JButton("-")
         bMinusButton.bounds = Rectangle(240,220,40,20)
         bMinusButton.font = defaultFont
         bMinusButton.addActionListener(this)     // Handle any clicks
         add(bMinusButton)
 
-        bText = JTextField("0")
+        bText = JTextField("000")
         bText.horizontalAlignment = SwingConstants.CENTER
         bText.addActionListener(this)
         bText.bounds = Rectangle(200, 250, 80, 80)
@@ -148,7 +175,6 @@ class MainWindow : JFrame(), ActionListener {
         add(bText)
 
     }
-
 
     /**
      * Handle any UI events (e.g. button clicks)
@@ -171,16 +197,24 @@ class MainWindow : JFrame(), ActionListener {
         gVal = (gVal + 256) %256
         bVal = (bVal + 256) %256
 
-        rText.text = rVal.toString()
-        gText.text = gVal.toString()
-        bText.text = bVal.toString()
+        rText.text = String.format("%03d", rVal)
+        gText.text = String.format("%03d", gVal)
+        bText.text = String.format("%03d", bVal)
 
         updateUI()
     }
 
     fun updateUI() {
-        println("update!!!")
-    }
 
+        val r = rText.text.toIntOrNull()?:0
+        val g = gText.text.toIntOrNull()?:0
+        val b = bText.text.toIntOrNull()?:0
+
+        val hexCode = String.format("#%02X%02X%02X", r, g, b)
+        colourPad.text = hexCode
+        colourPad.foreground = Color(255-r, 255-g, 255-b)
+        colourPad.background = Color(r,g,b)
+
+    }
 }
 
